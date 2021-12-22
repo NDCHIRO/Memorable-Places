@@ -63,7 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //savePlaces = new ArrayList<>();
+        savePlaces = new ArrayList<>();
     }
 
 
@@ -122,8 +122,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapLongClick(@NonNull LatLng latLng) {
         LatLng userLocation = new LatLng(latLng.latitude, latLng.longitude);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
-
         String address = "";
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         try {
@@ -159,8 +157,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //add the addresses to the list to send it soon to the main activity when back button is pressed
+        savePlaces.add(address);
+
         mMap.addMarker(new MarkerOptions().position(userLocation).title(address));
+        Toast.makeText(MapsActivity.this, "location saved!!", Toast.LENGTH_SHORT).show();
     }
+
+
     // when the road is not found just replace it with the date
     public String setDateFormat()
     {
@@ -168,6 +172,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm yyyy-MM-dd");
         address += sdf.format(new Date());
         return address;
+    }
+
+    //handle back button to pass the data to the main activity
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        intent.putExtra("savedPlaces",savePlaces);
+        startActivity(intent);
     }
 
 }

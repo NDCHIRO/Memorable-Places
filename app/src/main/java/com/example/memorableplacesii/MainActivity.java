@@ -15,11 +15,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
-    public void goToMaps(View view)
-    {
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-        startActivity(intent);
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
+
+
         ArrayList<String> addresses = new ArrayList<>();
         addresses.add("add new place...");
-        /*Intent intent = getIntent();
-        addresses=intent.getStringArrayListExtra("savedPlaces");*/
+
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,addresses);
         listView.setAdapter(arrayAdapter);
@@ -45,5 +42,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Intent intent = getIntent();
+        ArrayList<String> savedPlaces = (ArrayList<String>) getIntent().getSerializableExtra("savedPlaces");
+        if(savedPlaces != null)
+            addresses.addAll(savedPlaces);
+
     }
 }
