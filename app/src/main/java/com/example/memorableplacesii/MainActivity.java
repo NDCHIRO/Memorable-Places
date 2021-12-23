@@ -10,11 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
+    static ArrayList<String> places;
+    static  ArrayList<LatLng> locations;
+    static ArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,29 +28,22 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
+        places = new ArrayList<>();
+        places.add("add new place...");
 
+        locations = new ArrayList<>();
+        locations.add(new LatLng(0,0));
 
-        ArrayList<String> addresses = new ArrayList<>();
-        addresses.add("add new place...");
-
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,addresses);
+        arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, places);
         listView.setAdapter(arrayAdapter);
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(getApplicationContext(),i+"",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
-                intent.putExtra("Places",i);
+                intent.putExtra("placeNumber",i);
                 startActivity(intent);
             }
         });
-        Intent intent = getIntent();
-        ArrayList<String> savedPlaces = (ArrayList<String>) getIntent().getSerializableExtra("savedPlaces");
-        if(savedPlaces != null)
-            addresses.addAll(savedPlaces);
-
     }
 }
