@@ -89,8 +89,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapLongClickListener(this);
 
         Intent intent = getIntent();
-        Toast.makeText(getApplicationContext(), intent.getIntExtra("placeNumber", 0) + "", Toast.LENGTH_SHORT).show();
-
         // if we got number zero from the Main activity so add new place button is clicked
         if(intent.getIntExtra("placeNumber", 0) == 0)
         {
