@@ -44,18 +44,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     LocationManager locationManager;
     LocationListener locationListener;
-    ArrayList<String> savePlaces;
-    Map<Double,Double> allLatLong;
-    int placesClickedCount = 0;
-
+    //get the location, mark it and move the camera to it
     public void centerMapOnLocation(Location location, String title)
     {
         mMap.clear();
         LatLng clickedLocation = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.addMarker(new MarkerOptions().position(clickedLocation).title(title));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(clickedLocation, 12));
-
-
     }
 
     @Override
@@ -85,7 +80,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        savePlaces = new ArrayList<>();
         mMap.setOnMapLongClickListener(this);
 
         Intent intent = getIntent();
@@ -97,8 +91,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onLocationChanged(@NonNull Location location) {
                     centerMapOnLocation(location,"Your location");
-                    /*LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(userLocation).title("Your current location"));*/
                 }
             };
 
@@ -110,11 +102,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 {
                 //if request not granted yet
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
+                        != PackageManager.PERMISSION_GRANTED)
+                {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                 }
                 //if request is granted, get the last known location for the user
                 else {
+                    // 5 minDistance for not repeating the date while it is not changed
                     locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0, 5, locationListener);
                     Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     centerMapOnLocation(lastKnownLocation,"Your Location");
@@ -125,6 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // if any button clicked from the ListView except 0, it will show the place and its name
         else
         {
+            //get the location from the location list based on the clicked item from the list
             Location clickedLocation = new Location(LocationManager.GPS_PROVIDER);
             clickedLocation.setLatitude(MainActivity.locations.get(intent.getIntExtra("placeNumber", 0)).latitude);
             clickedLocation.setLongitude(MainActivity.locations.get(intent.getIntExtra("placeNumber", 0)).longitude);
@@ -168,7 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //add the places and location their lists
         MainActivity.places.add(address);
         MainActivity.locations.add(latLng);
-        //notify the arrayAdapter to update
+        //notify the arrayAdapter to update when data changed
         MainActivity.arrayAdapter.notifyDataSetChanged();
 
         Toast.makeText(MapsActivity.this, address, Toast.LENGTH_SHORT).show();
