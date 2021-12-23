@@ -4,8 +4,10 @@ design layout and second screen when add new location is clicked it shows last k
 
 ![1](https://user-images.githubusercontent.com/60838458/147184651-d332342b-a5f0-487a-a255-ebf9cce61223.png) ![2](https://user-images.githubusercontent.com/60838458/147184691-b99b3858-4ba7-417d-9f74-9294b166142b.png)
 
+holding on a place on the map for a while will mark it, add it to the saved locations, and show its name in a Toast
 
 ![3](https://user-images.githubusercontent.com/60838458/147184733-ec2b4b4c-c36e-4807-a3e7-780512509575.png)
+
 
 ![4](https://user-images.githubusercontent.com/60838458/147184763-0e9810b7-b3e5-4bf5-ab99-88454ca60dd7.png)
 
