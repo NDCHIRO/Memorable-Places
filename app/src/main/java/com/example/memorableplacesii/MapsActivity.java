@@ -120,10 +120,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         else
         {
             //get the location from the location list based on the clicked item from the list
-            Location clickedLocation = new Location(LocationManager.GPS_PROVIDER);
-            clickedLocation.setLatitude(MainActivity.locations.get(intent.getIntExtra("placeNumber", 0)).latitude);
-            clickedLocation.setLongitude(MainActivity.locations.get(intent.getIntExtra("placeNumber", 0)).longitude);
-            centerMapOnLocation(clickedLocation,MainActivity.places.get(intent.getIntExtra("placeNumber", 0)));
+            Location placeLocation = new Location(LocationManager.GPS_PROVIDER);
+            placeLocation.setLatitude(MainActivity.locations.get(intent.getIntExtra("placeNumber", 0)).latitude);
+            placeLocation.setLongitude(MainActivity.locations.get(intent.getIntExtra("placeNumber", 0)).longitude);
+            centerMapOnLocation(placeLocation,MainActivity.places.get(intent.getIntExtra("placeNumber", 0)));
         }
     }
     // when user long click on a location, app gets (if any of the following exits) street  name, locality, governorate.
