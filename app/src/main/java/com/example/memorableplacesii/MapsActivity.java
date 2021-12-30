@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.icu.text.CaseMap;
 import android.icu.text.DecimalFormat;
@@ -20,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,6 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     LocationManager locationManager;
     LocationListener locationListener;
+
     //get the location, mark it and move the camera to it
     public void centerMapOnLocation(Location location, String title)
     {
@@ -166,8 +169,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //notify the arrayAdapter to update when data changed
         MainActivity.arrayAdapter.notifyDataSetChanged();
 
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.memorableplacesii",MODE_PRIVATE);
+        try {
+            ArrayList<String> latitudes = new ArrayList<>();
+            ArrayList<String> longitudes = new ArrayList<>();
+            for(LatLng coords : MainActivity.locations)
+            {
+                latitudes.add(Double.toString(coords.latitude));
+                longitudes.add(Double.toString(coords.longitude));
+            }
+
+            sharedPreferences.edit().putString("places",ObjectSerializer.serialize(MainActivity.places)).apply();
+            sharedPreferences.edit().putString("lats",ObjectSerializer.serialize(latitudes)).apply();
+            sharedPreferences.edit().putString("lons",ObjectSerializer.serialize(longitudes)).apply();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         Toast.makeText(MapsActivity.this, address, Toast.LENGTH_SHORT).show();
         Toast.makeText(MapsActivity.this, "location saved!!", Toast.LENGTH_SHORT).show();
+
     }
 
 
