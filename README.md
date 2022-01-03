@@ -6,7 +6,7 @@ layout of the app and when add new place is clicked it shows last known location
 
 holding on a place on the map for a while will mark it, add it to the saved locations, and show its name in a Toast
 
-![3](https://user-images.githubusercontent.com/60838458/147184733-ec2b4b4c-c36e-4807-a3e7-780512509575.png)
+        ![3](https://user-images.githubusercontent.com/60838458/147184733-ec2b4b4c-c36e-4807-a3e7-780512509575.png)
 
 list of all the saved placed that was marked from the map
 
