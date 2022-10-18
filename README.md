@@ -1,9 +1,7 @@
 # Memorable-Places
 
 important note:
-
 if you get this error while updating address on long click "java.io.IOException: grpc failed"
-
 Try turn ON and OFF flight mode on the emulator.  And reopen the app from the emulator.
 
 layout of the app and when add new place is clicked it shows last known location or current location if possible
