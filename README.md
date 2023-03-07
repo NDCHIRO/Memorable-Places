@@ -20,4 +20,4 @@ when a person select a location from the list, it shows the location on the map.
 
 ![5](https://user-images.githubusercontent.com/60838458/147184794-aa494a25-f436-4b32-b442-7cdd57f653ac.png)
 
-places are saved in the app using sharedPrefernces so when the user open the app again he finds all the places he clicked on.
+places are saved in the app using SharedPreferences so when the user open the app again he finds all the places he clicked on.
